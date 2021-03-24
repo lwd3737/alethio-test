@@ -1,26 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import styled from 'styled-components';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { LoginPage, SignupPage, ServicePage, MyPage } from 'pages';
+import { Header } from 'common/components';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <S.GlobalLayout>
+      <Router>
+        <Header />
+
+        <main>
+          <Switch>
+            <Route exact path="/">
+              <ServicePage />
+            </Route>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/sign-up">
+              <SignupPage />
+            </Route>
+            <Route path="/mypage">
+              <MyPage />
+            </Route>
+          </Switch>
+        </main>
+      </Router>
+    </S.GlobalLayout>
   );
 }
 
 export default App;
-        
+
+const S = {
+  GlobalLayout: styled.div`
+    padding: 3vh 5vw;
+
+    main {
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+      padding-top: 10vh;
+    }
+  `,
+};
