@@ -10,6 +10,9 @@ export default function TabMenu() {
         style={{
           display: 'flex',
         }}
+        navItemStyle={{
+          marginLeft: '2vw',
+        }}
       />
     </S.TabMenu>
   );

@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { LoginPage, SignupPage, ServicePage, MyPage } from 'pages';
+import { LoginPage, SignupPage, ServicePage, MyPage, LogoutPage } from 'pages';
 import { Header } from 'common/components';
 
 function App() {
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
   return (
     <S.GlobalLayout>
       <Router>
@@ -16,15 +19,25 @@ function App() {
             <Route exact path="/">
               <ServicePage />
             </Route>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
-            <Route exact path="/sign-up">
-              <SignupPage />
-            </Route>
-            <Route path="/mypage">
-              <MyPage />
-            </Route>
+            {!isLogin ? (
+              <>
+                <Route exact path="/login">
+                  <LoginPage />
+                </Route>
+                <Route exact path="/sign-up">
+                  <SignupPage />
+                </Route>
+              </>
+            ) : (
+              <>
+                <Route exact path="/mypage/order">
+                  <MyPage />
+                </Route>
+                <Route exact path="/logout">
+                  <LogoutPage />
+                </Route>
+              </>
+            )}
           </Switch>
         </main>
       </Router>

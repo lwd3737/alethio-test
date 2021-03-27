@@ -26,11 +26,14 @@ export default function HamburgerMenu() {
           X
         </div>
         <Navigation
-          navItemClickHandler={handleCloseClick}
+          onNavItemClick={handleCloseClick}
           style={{
             textAlign: 'center',
             fontSize: '2rem',
             lineHeight: '80px',
+          }}
+          navItemStyle={{
+            display: 'block',
           }}
         />
       </S.Overlay>
