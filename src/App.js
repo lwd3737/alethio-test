@@ -30,7 +30,7 @@ function App() {
               </>
             ) : (
               <>
-                <Route exact path="/mypage/order">
+                <Route path="/mypage">
                   <MyPage />
                 </Route>
                 <Route exact path="/logout">

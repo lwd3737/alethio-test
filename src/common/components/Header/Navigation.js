@@ -25,7 +25,6 @@ export default function Navigation({ style, navItemStyle, onNavItemClick }) {
         <>
           <NavLink
             className="nav-item"
-            exact
             to="/mypage/order"
             style={navItemStyle}
             activeStyle={activeStyle}

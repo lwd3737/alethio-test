@@ -19,6 +19,7 @@ const S = {
     }
 
     .contents {
+      padding-bottom: 10vh;
     }
   `,
 };
