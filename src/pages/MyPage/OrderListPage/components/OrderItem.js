@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-export default function OrderItem({ id, name }) {
+function OrderItem({ id, name }) {
   const history = useHistory();
 
-  const handleOrderItemMoveClick = (id) => {
-    history.push(`/mypage/order/${id}`);
-  };
+  const handleOrderItemMoveClick = useCallback(
+    (id) => {
+      history.push(`/mypage/order/${id}`);
+    },
+    [id],
+  );
 
   return (
     <S.OrderItem onClick={() => handleOrderItemMoveClick(id)}>
@@ -16,6 +19,8 @@ export default function OrderItem({ id, name }) {
     </S.OrderItem>
   );
 }
+
+export default React.memo(OrderItem);
 
 const S = {
   OrderItem: styled.div`

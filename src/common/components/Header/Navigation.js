@@ -3,73 +3,70 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-export default function Navigation({ style, navItemStyle, onNavItemClick }) {
+const activeStyle = {
+  color: 'green',
+};
+
+function Navigation({ style, navItemStyle, onNavItemClick }) {
   const isLogin = useSelector((state) => state.auth.isLogin);
-  const activeStyle = {
-    color: 'green',
-  };
 
   return (
     <S.Navigation style={style}>
-      <NavLink
-        className="nav-item"
-        exact
+      <NavItem
+        text="서비스"
         to="/"
-        style={navItemStyle}
-        activeStyle={activeStyle}
+        navItemStyle={navItemStyle}
         onClick={onNavItemClick}
-      >
-        서비스
-      </NavLink>
+      />
       {isLogin ? (
         <>
-          <NavLink
-            className="nav-item"
+          <NavItem
+            text="마이페이지"
             to="/mypage/order"
-            style={navItemStyle}
-            activeStyle={activeStyle}
+            navItemStyle={navItemStyle}
             onClick={onNavItemClick}
-          >
-            마이페이지
-          </NavLink>
-          <NavLink
-            className="nav-item"
-            exact
+          />
+          <NavItem
+            text="로그아웃"
             to="/logout"
-            style={navItemStyle}
-            activeStyle={activeStyle}
+            navItemStyle={navItemStyle}
             onClick={onNavItemClick}
-          >
-            로그아웃
-          </NavLink>
+          />
         </>
       ) : (
         <>
-          <NavLink
-            className="nav-item"
-            exact
+          <NavItem
+            text="회원가입"
             to="/sign-up"
-            style={navItemStyle}
-            activeStyle={activeStyle}
+            navItemStyle={navItemStyle}
             onClick={onNavItemClick}
-          >
-            회원가입
-          </NavLink>
-          <NavLink
-            className="nav-item"
-            exact
+          />
+          <NavItem
+            text="로그인"
             to="/login"
-            style={navItemStyle}
-            activeStyle={activeStyle}
+            navItemStyle={navItemStyle}
             onClick={onNavItemClick}
-          >
-            로그인
-          </NavLink>
+          />
         </>
       )}
     </S.Navigation>
   );
 }
+
+export default React.memo(Navigation);
+
+const NavItem = React.memo(({ text, to, navItemStyle, onClick }) => (
+  <NavLink
+    className="nav-item"
+    exact
+    to={to}
+    style={navItemStyle}
+    activeStyle={activeStyle}
+    onClick={onClick}
+  >
+    {text}
+  </NavLink>
+));
 
 const S = {
   Navigation: styled.nav`

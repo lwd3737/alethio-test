@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function PageLayout({ children, title }) {
+function PageLayout({ children, title }) {
   return (
     <S.PageLayout>
       <h1 className="title">{title}</h1>
@@ -10,6 +10,8 @@ export default function PageLayout({ children, title }) {
     </S.PageLayout>
   );
 }
+
+export default React.memo(PageLayout);
 
 const S = {
   PageLayout: styled.div`

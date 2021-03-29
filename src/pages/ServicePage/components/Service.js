@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { Button } from 'common/components';
 import orderItem from 'assets/order-item.jpeg';
 
-export default function Service({ onOrderBtnClick }) {
+function Service({ onOrderBtnClick }) {
   return (
     <S.Service>
       <div className="order-item">
-        <img src={orderItem} />
+        <img src={orderItem} alt="outwear" />
       </div>
 
       <div className="btn-wrapper">
@@ -17,6 +17,8 @@ export default function Service({ onOrderBtnClick }) {
     </S.Service>
   );
 }
+
+export default React.memo(Service);
 
 const S = {
   Service: styled.div`

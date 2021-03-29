@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { ReactComponent as LogoIcon } from 'assets/logo.svg';
 
-export default function Logo() {
+function Logo() {
   return (
     <LogoIcon
       style={{
@@ -13,3 +12,5 @@ export default function Logo() {
     />
   );
 }
+
+export default React.memo(Logo);

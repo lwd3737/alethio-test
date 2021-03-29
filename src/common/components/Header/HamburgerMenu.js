@@ -1,21 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import Navigation from './Navigation';
 import { ReactComponent as HamburgerIcon } from 'assets/bars.svg';
 
-export default function HamburgerMenu() {
+const style = {
+  textAlign: 'center',
+  fontSize: '2rem',
+  lineHeight: '80px',
+};
+
+const navItemStyle = {
+  display: 'block',
+};
+
+function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpenClick = (e) => {
+  const handleOpenClick = useCallback((e) => {
     e.stopPropagation();
     setIsOpen(true);
-  };
+  }, []);
 
-  const handleCloseClick = (e) => {
+  const handleCloseClick = useCallback((e) => {
     e.stopPropagation();
     setIsOpen(false);
-  };
+  }, []);
 
   return (
     <S.HamburgerMenu onClick={(e) => handleOpenClick(e)}>
@@ -27,19 +37,15 @@ export default function HamburgerMenu() {
         </div>
         <Navigation
           onNavItemClick={handleCloseClick}
-          style={{
-            textAlign: 'center',
-            fontSize: '2rem',
-            lineHeight: '80px',
-          }}
-          navItemStyle={{
-            display: 'block',
-          }}
+          style={style}
+          navItemStyle={navItemStyle}
         />
       </S.Overlay>
     </S.HamburgerMenu>
   );
 }
+
+export default HamburgerMenu;
 
 const S = {
   HamburgerMenu: styled.span`

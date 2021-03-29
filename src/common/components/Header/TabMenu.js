@@ -3,20 +3,23 @@ import styled, { css } from 'styled-components';
 
 import Navigation from './Navigation';
 
-export default function TabMenu() {
+const style = {
+  display: 'flex',
+};
+
+const navItemStyle = {
+  marginLeft: '2vw',
+};
+
+function TabMenu() {
   return (
     <S.TabMenu>
-      <Navigation
-        style={{
-          display: 'flex',
-        }}
-        navItemStyle={{
-          marginLeft: '2vw',
-        }}
-      />
+      <Navigation style={style} navItemStyle={navItemStyle} />
     </S.TabMenu>
   );
 }
+
+export default TabMenu;
 
 const S = {
   TabMenu: styled.div`

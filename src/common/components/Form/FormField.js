@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function FormField({
+function FormField({
   type = 'text',
   labelText,
   name,
@@ -24,6 +24,8 @@ export default function FormField({
     </S.FormField>
   );
 }
+
+export default React.memo(FormField);
 
 const S = {
   FormField: styled.div`

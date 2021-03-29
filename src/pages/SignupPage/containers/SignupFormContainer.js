@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -29,17 +29,18 @@ export default function SignupFormContainer() {
   });
   const { email, password, passwordConfirm, mobile } = inputs;
 
-  const checkEmail = (email) => {
+  const checkEmail = useCallback((email) => {
     const re = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     return re.test(email);
-  };
+  }, []);
 
-  const checkPassword = (password) => {
+  const checkPassword = useCallback((password) => {
     const re = /^[\w]{8,15}$/;
     return re.test(password);
-  };
+  }, []);
 
-  const checkInputsValidation = ($form) => {
+  const checkInputsValidation = useCallback((inputs, $form) => {
+    const { email, password, passwordConfirm } = inputs;
     if (!checkEmail(email.value)) {
       alert('이메일 확인');
 
@@ -59,73 +60,82 @@ export default function SignupFormContainer() {
     }
 
     return true;
-  };
+  }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    let isValid = inputs[name].isValid;
+  const handleInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      let isValid = inputs[name].isValid;
 
-    if (name === 'password') {
-      if (checkPassword(value)) {
-        isValid = true;
-      } else {
-        isValid = false;
+      if (name === 'password') {
+        if (checkPassword(value)) {
+          isValid = true;
+        } else {
+          isValid = false;
+        }
       }
-    }
 
-    setInputs({
-      ...inputs,
-      [name]: {
-        ...inputs[name],
-        value,
-        isValid,
-      },
-    });
-  };
-
-  const handleEmailInputBlur = (e) => {
-    const { name, value } = e.target;
-
-    if (name !== 'email') return;
-
-    if (!checkEmail(value)) {
       setInputs({
         ...inputs,
         [name]: {
           ...inputs[name],
-          isValid: false,
+          value,
+          isValid,
         },
       });
-    } else {
-      setInputs({
-        ...inputs,
-        [name]: {
-          ...inputs[name],
-          isValid: true,
-        },
-      });
-    }
-  };
+    },
+    [inputs],
+  );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const $form = e.target;
+  const handleEmailInputBlur = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    if (!checkInputsValidation($form)) return;
+      if (name !== 'email') return;
 
-    try {
-      const { token } = await authAPI.signup({
-        email,
-        password,
-        mobile,
-      });
+      if (!checkEmail(value)) {
+        setInputs({
+          ...inputs,
+          [name]: {
+            ...inputs[name],
+            isValid: false,
+          },
+        });
+      } else {
+        setInputs({
+          ...inputs,
+          [name]: {
+            ...inputs[name],
+            isValid: true,
+          },
+        });
+      }
+    },
+    [email],
+  );
 
-      dispatch(requestSignupSuccess(token));
-      history.push('/');
-    } catch (e) {
-      alert('에러 발생: ', e.message);
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const $form = e.target;
+
+      if (!checkInputsValidation(inputs, $form)) return;
+
+      try {
+        const { token } = await authAPI.signup({
+          email,
+          password,
+          mobile,
+        });
+
+        dispatch(requestSignupSuccess(token));
+        history.push('/');
+      } catch (e) {
+        alert('에러 발생: ', e.message);
+      }
+    },
+    [inputs],
+  );
 
   return (
     <SignupForm

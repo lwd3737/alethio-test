@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function Form({ children, Buttons, onSubmit }) {
+function Form({ children, Buttons, onSubmit }) {
   return (
     <S.Form onSubmit={onSubmit}>
       <div className="fields">{children}</div>
@@ -9,6 +9,8 @@ export default function Form({ children, Buttons, onSubmit }) {
     </S.Form>
   );
 }
+
+export default React.memo(Form);
 
 const S = {
   Form: styled.form`

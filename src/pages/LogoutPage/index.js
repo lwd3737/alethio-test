@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { logout } from 'modules/auth';
 
-export default function LogoutPage() {
+function LogoutPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -20,3 +20,5 @@ export default function LogoutPage() {
 
   return null;
 }
+
+export default LogoutPage;

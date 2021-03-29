@@ -2,10 +2,13 @@ import React from 'react';
 
 import { PageLayout } from 'common/templates';
 import { ServiceContainer } from './containers';
-export default function ServicePage() {
+
+function ServicePage() {
   return (
     <PageLayout title="서비스">
       <ServiceContainer />
     </PageLayout>
   );
 }
+
+export default ServicePage;

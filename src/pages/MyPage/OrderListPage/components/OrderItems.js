@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import OrderItem from './OrderItem';
 
-export default function OrderItems({ orderItems }) {
+function OrderItems({ orderItems }) {
   return (
     <S.OrderItems>
       {orderItems?.map((orderItem) => {
@@ -13,6 +13,8 @@ export default function OrderItems({ orderItems }) {
     </S.OrderItems>
   );
 }
+
+export default React.memo(OrderItems);
 
 const S = {
   OrderItems: styled.div`

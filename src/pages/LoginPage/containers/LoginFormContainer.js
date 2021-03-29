@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -15,34 +15,39 @@ export default function LoginFormContainer() {
   });
   const { email, password } = inputs;
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    },
+    [inputs],
+  );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    try {
-      const { token } = await authAPI.login({ email, password });
+      try {
+        const { token } = await authAPI.login({ email, password });
 
-      dispatch(requestLoginSuccess(token));
-      history.push('/');
-    } catch (e) {
-      console.log('e: ', e);
-      const { status } = e.response;
+        dispatch(requestLoginSuccess(token));
+        history.push('/');
+      } catch (e) {
+        const { status } = e.response;
 
-      if (status == 401) {
-        alert('비밀번호 길이를 8글자 이상으로 입력해주세요.');
-      } else {
-        alert('에러 발생: ', e.message);
+        if (status === 401) {
+          alert('비밀번호 길이를 8글자 이상으로 입력해주세요.');
+        } else {
+          alert('에러 발생: ', e.message);
+        }
       }
-    }
-  };
+    },
+    [inputs],
+  );
 
   return (
     <LoginForm

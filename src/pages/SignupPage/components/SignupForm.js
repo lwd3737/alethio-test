@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Form, FormField, Button } from 'common/components';
 
-export default function SignupForm({
-  inputs,
-  onInputChange,
-  onEmailInputBlur,
-  onSubmit,
-}) {
+function SignupForm({ inputs, onInputChange, onEmailInputBlur, onSubmit }) {
   const { email, password, passwordConfirm, mobile } = inputs;
 
-  const renderButton = () => {
+  const SignupButton = useMemo(() => {
     return <Button>가입하기</Button>;
-  };
+  }, []);
 
   return (
-    <Form Buttons={renderButton()} onSubmit={onSubmit}>
+    <Form Buttons={SignupButton} onSubmit={onSubmit}>
       <FormField
         labelText="이메일"
         name="email"
@@ -48,3 +43,5 @@ export default function SignupForm({
     </Form>
   );
 }
+
+export default React.memo(SignupForm);

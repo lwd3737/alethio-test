@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 
-export default function PageNation({
-  totalPages,
-  currentPage,
-  onPageNumberMoveClick,
-}) {
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
+function PageNation({ totalPages, currentPage, onPageNumberMoveClick }) {
+  const pageNumbers = useMemo(() => {
+    const _pageNumbers = [];
 
     for (let i = 0; i < totalPages; i++) {
-      pageNumbers.push(
+      _pageNumbers.push(
         <PageNumber
           key={i}
           number={i}
@@ -20,19 +16,21 @@ export default function PageNation({
       );
     }
 
-    return pageNumbers;
-  };
+    return _pageNumbers;
+  }, [totalPages, currentPage]);
 
-  return <S.PageNation>{renderPageNumbers()}</S.PageNation>;
+  return <S.PageNation>{pageNumbers}</S.PageNation>;
 }
 
-function PageNumber({ number, isCurrentPage, onClick }) {
+export default React.memo(PageNation);
+
+const PageNumber = React.memo(({ number, isCurrentPage, onClick }) => {
   return (
     <S.PageNumber isCurrentPage={isCurrentPage} onClick={() => onClick(number)}>
       {number + 1}
     </S.PageNumber>
   );
-}
+});
 
 const S = {
   PageNation: styled.div`

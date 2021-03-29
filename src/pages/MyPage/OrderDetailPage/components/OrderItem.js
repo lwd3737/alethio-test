@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function OrderItem({ id, itemName }) {
+function OrderItem({ id, itemName }) {
   return (
     <S.OrderItem>
       <div className="order-id">id: {id}</div>
@@ -9,6 +9,8 @@ export default function OrderItem({ id, itemName }) {
     </S.OrderItem>
   );
 }
+
+export default React.memo(OrderItem);
 
 const S = {
   OrderItem: styled.div`
