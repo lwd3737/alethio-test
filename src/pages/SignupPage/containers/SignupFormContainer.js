@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ export default function SignupFormContainer() {
       isValid: true,
     },
   });
-  const { email, password, passwordConfirm, mobile } = inputs;
+  const { email, password, mobile } = inputs;
 
   const checkEmail = useCallback((email) => {
     const re = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
